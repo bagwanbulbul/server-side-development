@@ -1,4 +1,7 @@
+// var createError = require("http-errors")
 var express = require('express');
+var app = express();
+
 var path = require('path');
 var favicon = require('static-favicon');
 var logger = require('morgan');
@@ -7,8 +10,19 @@ var bodyParser = require('body-parser');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var dishRouter = require("./routes/dishRouter");
 
-var app = express();
+
+const mongoose = require('mongoose');
+const Dishes = require('./models/dishes');
+
+const url = 'mongodb://localhost:27017/conFusion';
+const connect = mongoose.connect(url);
+
+connect.then((db) => {
+    console.log("Connected correctly to server");
+}, (err) => { console.log(err); });
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
